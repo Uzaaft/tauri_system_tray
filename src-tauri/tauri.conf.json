@@ -17,15 +17,11 @@
     },
     "allowlist": {
       "fs": {
-        "readDir": true,
-        "readFile": true,
-        "writeFile": true,
-        "scope": ["$APPDATA/*"]
+        "readDir": false,
+        "readFile": false,
+        "writeFile": false
       },
       "globalShortcut": {
-        "all": true
-      },
-      "path": {
         "all": true
       },
       "window": {
