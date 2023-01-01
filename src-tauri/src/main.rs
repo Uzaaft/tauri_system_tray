@@ -17,7 +17,7 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet])
         .system_tray(create_system_tray())
-        .on_system_tray_event(|app, event| system_tray_events(app, event))
+        .on_system_tray_event(system_tray_events)
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -37,8 +37,8 @@ fn create_system_tray() -> SystemTray {
 
 /// Handle system tray events
 fn system_tray_events(app: &AppHandle, event: SystemTrayEvent) {
-    match event {
-        SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
+    if let SystemTrayEvent::MenuItemClick { id, .. } = event {
+        match id.as_str() {
             "Hide" => {
                 let window = app.get_window("main").unwrap();
                 window.hide().unwrap();
@@ -51,7 +51,6 @@ fn system_tray_events(app: &AppHandle, event: SystemTrayEvent) {
                 std::process::exit(0);
             }
             _ => {}
-        },
-        _ => {}
+        }
     }
 }
